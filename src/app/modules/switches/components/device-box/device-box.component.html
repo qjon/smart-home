@@ -1,0 +1,26 @@
+<mat-card [ngClass]="{disconnected: !device.isConnected}">
+  <mat-card-header>
+    <span class="disconnected mat-caption" *ngIf="!device.isConnected">Disconnected</span>
+    <mat-card-title>
+      <sh-core-inline-edit [name]="device.name"
+                           [renameError$]="getDeviceRenameErrorEffect()"
+                           [renameSuccess$]="getDeviceRenameSuccessEffect()"
+                           [maxLength]="35"
+                           (onRename)="rename($event)"></sh-core-inline-edit>
+    </mat-card-title>
+    <mat-card-subtitle>{{device.id}}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-divider></mat-divider>
+  <mat-card-content>
+    <sh-switch-status *ngFor="let outlet of device.switches.keys()"
+                      [isEnabled]="device.isConnected"
+                      [deviceId]="device.id"
+                      [switchModel]="device.switches.get(outlet)"
+                      (onRename)="renameSwitch(outlet, $event)"
+                      (change)="toggle($event)"></sh-switch-status>
+  </mat-card-content>
+  <mat-divider></mat-divider>
+  <mat-card-actions>
+    <sh-device-on-off [isEnabled]="device.isConnected" (toggle)="onOff($event)"></sh-device-on-off>
+  </mat-card-actions>
+</mat-card>

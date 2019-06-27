@@ -1,0 +1,35 @@
+@import "../../../../../variables";
+
+.switch-status {
+  display: inline-block;
+  margin-right: 10px;
+  margin-bottom: 20px;
+
+  .switch-status-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    .name {
+      text-align: center;
+      margin: 2px;
+    }
+
+  }
+
+
+  .mat-button-toggle-checked {
+    &.on {
+      color: $fontInverseColor;
+      background-color: $primary;
+    }
+
+    &.off {
+      background-color: $warn;
+      color: $fontInverseColor;
+    }
+
+  }
+}
+
+
