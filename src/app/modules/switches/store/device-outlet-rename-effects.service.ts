@@ -16,6 +16,17 @@ import {of} from 'rxjs';
 })
 export class DeviceOutletRenameEffectsService {
 
+  public outletRenameError$ = this.actions$
+    .pipe(
+      ofType(SwitchActionTypes.RenameOutletError),
+    );
+
+  public outletRenameSuccess$ = this.actions$
+    .pipe(
+      ofType(SwitchActionTypes.RenameOutletSuccess),
+    );
+
+
   @Effect({dispatch: true})
   public outletRename$ = this.actions$
     .pipe(
@@ -32,16 +43,14 @@ export class DeviceOutletRenameEffectsService {
     );
 
   @Effect({dispatch: false})
-  public outletRenameError$ = this.actions$
+  public outletRenameError = this.outletRenameError$
     .pipe(
-      ofType(SwitchActionTypes.RenameOutletError),
       tap(() => this.notificationService.error('Rename Switch', 'Switch name has not been changed'))
     );
 
   @Effect({dispatch: false})
-  public outletRenameSuccess$ = this.actions$
+  public outletRenameSuccess = this.outletRenameSuccess$
     .pipe(
-      ofType(SwitchActionTypes.RenameOutletSuccess),
       tap(() => this.notificationService.success('Rename Switch', 'Switch name has been changed'))
     );
 

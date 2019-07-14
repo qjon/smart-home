@@ -64,6 +64,4 @@ export class DeviceBoxComponent implements OnInit {
         filter((action: SwitchesRenameSuccessAction) => action.payload.deviceId === this.device.id)
       );
   }
-
-
 }

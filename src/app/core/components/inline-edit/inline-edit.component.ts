@@ -1,5 +1,17 @@
-import {ChangeDetectionStrategy, Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {Observable, Subscription} from 'rxjs';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild
+} from '@angular/core';
+import {Observable, ReplaySubject, Subscription} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'sh-core-inline-edit',
@@ -7,7 +19,7 @@ import {Observable, Subscription} from 'rxjs';
   styleUrls: ['./inline-edit.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class InlineEditComponent implements OnInit {
+export class InlineEditComponent implements OnInit, OnDestroy {
   @Input()
   public name: string;
 
@@ -32,13 +44,23 @@ export class InlineEditComponent implements OnInit {
   public previousValue: string;
   public subscription = new Subscription();
 
+  protected destroy$ = new ReplaySubject<any>();
+
   public constructor() {
 
+  }
+
+  public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   public ngOnInit(): void {
     this.subscription.add(
       this.renameSuccess$
+        .pipe(
+          takeUntil(this.destroy$)
+        )
         .subscribe(() => {
           this.isSaving = false;
           this.onBlur();
@@ -47,6 +69,9 @@ export class InlineEditComponent implements OnInit {
 
     this.subscription.add(
       this.renameError$
+        .pipe(
+          takeUntil(this.destroy$)
+        )
         .subscribe(() => {
           this.isEditing = true;
           this.isActive = true;
@@ -81,7 +106,7 @@ export class InlineEditComponent implements OnInit {
       this.save();
 
       return false;
-    } else if ($event.key === 'Escape') {
+    } else if ($event.key === 'Escape' || $event.key === 'Tab') {
       $event.stopPropagation();
 
       this.isActive = false;

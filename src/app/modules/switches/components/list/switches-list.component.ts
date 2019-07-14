@@ -26,4 +26,8 @@ export class SwitchesListComponent implements OnInit {
         select(switchesSelectors.switchesDeviceListSelector),
       );
   }
+
+  public trackSwitch(item: SwitchDeviceModel): string {
+    return item.id;
+  }
 }

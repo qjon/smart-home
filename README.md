@@ -13,6 +13,10 @@ It use own cloud server instead EWelink [smart-home-server](https://github.com/q
 
 ## Change log
 
+### v0.8.1
+* rename switch outlet
+* Add licence
+
 ### v0.8.0
 
 * display list of connected devices
