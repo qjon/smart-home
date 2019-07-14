@@ -3,26 +3,24 @@ import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/rou
 import {SwitchDeviceDto} from '../interfaces/switch-device.interface';
 import {Observable} from 'rxjs';
 import {SwitchesApiService} from '../api/switches-api.service';
-import {Store} from '@ngrx/store';
-import {SwitchesState} from '../store/switches-reducer';
 import {tap} from 'rxjs/operators';
-import {SwitchesLoadAction} from '../store/switches-actions';
+import {SwitchesDeviceListStateConnectorInterface} from '../interfaces/switches-device-list-state-connector.interface';
+import {switchesStateConnectorParamName} from '../const/switches.consts';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SwitchesListResolverService implements Resolve<SwitchDeviceDto[]> {
-
-
-  constructor(private switchesApiService: SwitchesApiService,
-              private store: Store<SwitchesState>) {
+  constructor(private switchesApiService: SwitchesApiService) {
   }
 
   public resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<SwitchDeviceDto[]> {
+    const switchesDeviceListStateConnector: SwitchesDeviceListStateConnectorInterface = route.parent.data[switchesStateConnectorParamName];
+
     return this.switchesApiService.fetchList()
       .pipe(
         tap((devices) => {
-          this.store.dispatch(new SwitchesLoadAction({devices}));
+          switchesDeviceListStateConnector.setDevices(devices);
         })
       );
   }
