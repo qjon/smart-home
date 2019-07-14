@@ -18,6 +18,7 @@ import {SmartHomeCoreModule} from '../../core/smart-home-core.module';
 import {DeviceBoxComponent} from './components/device-box/device-box.component';
 import {ErrorResponseInterceptorService} from './api/error-response-interceptor.service';
 import {DeviceOutletRenameEffectsService} from './store/device-outlet-rename-effects.service';
+import {SwitchesStateConnectorService} from './store/state-connectors/switches-state-connector.service';
 
 @NgModule({
   declarations: [SwitchesListComponent, SwitchStatusComponent, TrueFalseComponent, DeviceOnOffComponent, DeviceBoxComponent],
@@ -42,6 +43,7 @@ import {DeviceOutletRenameEffectsService} from './store/device-outlet-rename-eff
     ServerWebsocketService,
     SwitchesApiService,
     SwitchesRenameEffectsService,
+    SwitchesStateConnectorService,
     {provide: HTTP_INTERCEPTORS, useClass: ErrorResponseInterceptorService, multi: true},
   ],
   schemas: [
