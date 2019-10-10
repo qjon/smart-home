@@ -1,8 +1,7 @@
-import {Component} from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {SwitchDeviceModel} from '../../models/switch-device-model';
-import {ActivatedRoute} from '@angular/router';
 import {SwitchesDeviceListStateConnectorInterface} from '../../interfaces/switches-device-list-state-connector.interface';
-import {switchesStateConnectorParamName} from '../../const/switches.consts';
+import {SwitchesStateConnectorService} from '../../store/state-connectors/switches-state-connector.service';
 
 @Component({
   selector: 'sh-list',
@@ -10,10 +9,7 @@ import {switchesStateConnectorParamName} from '../../const/switches.consts';
   styleUrls: ['./switches-list.component.scss'],
 })
 export class SwitchesListComponent {
-  public deviceListStateConnector: SwitchesDeviceListStateConnectorInterface;
-
-  constructor(private activatedRoute: ActivatedRoute) {
-    this.deviceListStateConnector = this.activatedRoute.snapshot.data[switchesStateConnectorParamName];
+  constructor(@Inject(SwitchesStateConnectorService) public deviceListStateConnector: SwitchesDeviceListStateConnectorInterface) {
   }
 
   public trackSwitch(item: SwitchDeviceModel): string {

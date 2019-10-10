@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {StateConnectorInterface} from '../../../../core/interafces/state-connector';
 import {SwitchesStateConnectorInterface} from '../../interfaces/switches-state-connector.interface';
 import {select, Store} from '@ngrx/store';
 import {switchesSelectors} from '../switches-selectors';
@@ -9,25 +8,22 @@ import {SwitchesLoadAction, SwitchesOpenCreateDialogAction} from '../switches-ac
 @Injectable({
   providedIn: 'root'
 })
-export class SwitchesStateConnectorService implements StateConnectorInterface<SwitchesStateConnectorInterface> {
+export class SwitchesStateConnectorService implements SwitchesStateConnectorInterface {
 
+  public devices$ = this.store
+    .pipe(
+      select(switchesSelectors.switchesDeviceListSelector),
+    );
+  
   constructor(protected store: Store<any>) {
   }
 
-  public getStateConnector(): SwitchesStateConnectorInterface {
-    return {
-      devices$: this.store
-        .pipe(
-          select(switchesSelectors.switchesDeviceListSelector),
-        ),
-
-      setDevices: (devices: SwitchDeviceDto[]): void => {
-        this.store.dispatch(new SwitchesLoadAction({devices}));
-      },
-
-      openAddDeviceDialog: (): void => {
-        this.store.dispatch(new SwitchesOpenCreateDialogAction());
-      }
-    };
+  public setDevices(devices: SwitchDeviceDto[]): void {
+    this.store.dispatch(new SwitchesLoadAction({devices}));
   }
+
+  public openAddDeviceDialog(): void {
+    this.store.dispatch(new SwitchesOpenCreateDialogAction());
+  }
+
 }
