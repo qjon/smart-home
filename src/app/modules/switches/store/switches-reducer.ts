@@ -58,15 +58,16 @@ export function switchesReducer(state: SwitchesState = emptySwitchesState, actio
         }
       };
     case SwitchActionTypes.ChangeStatusSuccess:
+      const deviceId = action.payload['deviceId'];
       return {
         ...state,
         devices: {
           ...state.devices,
-          [action.payload['deviceId']]: {
-            ...state.devices[action.payload['deviceId']],
+          [deviceId]: {
+            ...state.devices[deviceId],
             params: {
-              ...state.devices[action.payload['deviceId']].params,
-              switches: state.devices[action.payload['deviceId']].params.switches.map((s: SwitchNameDto) => {
+              ...state.devices[deviceId].params,
+              switches: state.devices[deviceId].params.switches.map((s: SwitchNameDto) => {
                 if (s.outlet === action.payload['switch'].outlet) {
                   return {...s, ...action.payload.switch};
                 } else {

@@ -10,6 +10,9 @@ import {environment} from '../environments/environment';
 import {EffectsModule} from '@ngrx/effects';
 import {SimpleNotificationsModule} from 'angular2-notifications';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -21,6 +24,9 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     BrowserAnimationsModule,
     EffectsModule.forRoot([]),
     HttpClientModule,
+    MatIconModule,
+    MatButtonModule,
+    MatToolbarModule,
     SimpleNotificationsModule.forRoot({
       timeOut: 3000,
       showProgressBar: true,

@@ -9,6 +9,7 @@ export enum SwitchActionTypes {
   ChangeConnectionStatus = '[Switches] Change connection status',
   OnOff = '[Switches] Turn on/off',
   OnOffSuccess = '[Switches] Turn on/off success',
+  OpenCreateDialog = '[Switches] Open create dialog',
   Rename = '[Switches] Rename device',
   RenameError = '[Switches] Rename device error',
   RenameSuccess = '[Switches] Rename device success',
@@ -61,6 +62,10 @@ export class SwitchesOnOffAction implements Action {
   constructor(public payload: { deviceId: string, status: SwitchStatus }) {
 
   }
+}
+
+export class SwitchesOpenCreateDialogAction implements Action {
+  readonly type = SwitchActionTypes.OpenCreateDialog;
 }
 
 export class SwitchesOnOffSuccessAction implements Action {
@@ -135,6 +140,7 @@ export type SwitchesAction =
   | SwitchesChangeConnectionStatusAction
   | SwitchesOnOffAction
   | SwitchesOnOffSuccessAction
+  | SwitchesOpenCreateDialogAction
   | SwitchesRenameAction
   | SwitchesRenameErrorAction
   | SwitchesRenameSuccessAction
