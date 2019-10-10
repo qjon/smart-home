@@ -13,6 +13,10 @@ export class SwitchesApiService {
   constructor(protected httpClient: HttpClient) {
   }
 
+  public create(deviceId: string, apiKey: string, name: string): Observable<any> {
+    return this.httpClient.post<any>(this.host + '/api/devices', {deviceId, apiKey, name});
+  }
+
   public fetchList(): Observable<SwitchDeviceDto[]> {
     return this.httpClient.get<SwitchDeviceDto[]>(this.host + '/api/devices');
   }

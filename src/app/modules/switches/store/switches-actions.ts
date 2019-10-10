@@ -2,6 +2,9 @@ import {SwitchDeviceDto, SwitchDto, SwitchStatus} from '../interfaces/switch-dev
 import {Action} from '@ngrx/store';
 
 export enum SwitchActionTypes {
+  Create = '[Switches] Create',
+  CreateError = '[Switches] Create error',
+  CreateSuccess = '[Switches] Create success',
   Load = '[Switches] Load',
   ChangeStatus = '[Switches] Change status',
   ChangeStatusError = '[Switches] Change status error',
@@ -17,6 +20,25 @@ export enum SwitchActionTypes {
   RenameOutletError = '[Switches] Rename device outlet error',
   RenameOutletSuccess = '[Switches] Rename device outlet success',
   Update = '[Switches] Update device'
+}
+
+export class SwitchesCreateAction implements Action {
+  readonly type = SwitchActionTypes.Create;
+
+  constructor(public payload: { deviceId: string, apiKey: string, name: string }) {
+
+  }
+}
+
+export class SwitchesCreateErrorAction implements Action {
+  readonly type = SwitchActionTypes.CreateError;
+
+  constructor(public payload: { error: any }) {
+  }
+}
+
+export class SwitchesCreateSuccessAction implements Action {
+  readonly type = SwitchActionTypes.CreateSuccess;
 }
 
 export class SwitchesLoadAction implements Action {
@@ -133,7 +155,10 @@ export class SwitchesUpdateAction implements Action {
 }
 
 export type SwitchesAction =
-  SwitchesLoadAction
+  SwitchesCreateAction
+  | SwitchesCreateErrorAction
+  | SwitchesCreateSuccessAction
+  | SwitchesLoadAction
   | SwitchesChangeStatusAction
   | SwitchesChangeStatusErrorAction
   | SwitchesChangeStatusSuccessAction

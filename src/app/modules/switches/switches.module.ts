@@ -19,9 +19,24 @@ import {DeviceBoxComponent} from './components/device-box/device-box.component';
 import {ErrorResponseInterceptorService} from './api/error-response-interceptor.service';
 import {DeviceOutletRenameEffectsService} from './store/device-outlet-rename-effects.service';
 import {SwitchesStateConnectorService} from './store/state-connectors/switches-state-connector.service';
+import {AddDeviceComponent} from './components/add-device/add-device.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import {ReactiveFormsModule} from '@angular/forms';
+import {MatInputModule} from '@angular/material/input';
+import {MatToolbarModule} from '@angular/material/toolbar';
 
 @NgModule({
-  declarations: [SwitchesListComponent, SwitchStatusComponent, TrueFalseComponent, DeviceOnOffComponent, DeviceBoxComponent],
+  declarations: [
+    AddDeviceComponent,
+    DeviceBoxComponent,
+    DeviceOnOffComponent,
+    SwitchesListComponent,
+    SwitchStatusComponent,
+    TrueFalseComponent,
+  ],
+  entryComponents: [
+    AddDeviceComponent,
+  ],
   imports: [
     CommonModule,
     EffectsModule.forFeature([
@@ -33,11 +48,15 @@ import {SwitchesStateConnectorService} from './store/state-connectors/switches-s
     MatButtonModule,
     MatButtonToggleModule,
     MatCardModule,
+    MatDialogModule,
     MatDividerModule,
     MatIconModule,
+    MatToolbarModule,
+    ReactiveFormsModule,
     SmartHomeCoreModule,
     StoreModule.forFeature(SWITCHES_STATE_NAME, switchesReducer),
     SwitchesRoutingModule,
+    MatInputModule,
   ],
   providers: [
     ServerWebsocketService,
