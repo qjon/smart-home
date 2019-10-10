@@ -4,7 +4,7 @@ import {SwitchesStateConnectorInterface} from '../../interfaces/switches-state-c
 import {select, Store} from '@ngrx/store';
 import {switchesSelectors} from '../switches-selectors';
 import {SwitchDeviceDto} from '../../interfaces/switch-device.interface';
-import {SwitchesLoadAction} from '../switches-actions';
+import {SwitchesLoadAction, SwitchesOpenCreateDialogAction} from '../switches-actions';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +23,10 @@ export class SwitchesStateConnectorService implements StateConnectorInterface<Sw
 
       setDevices: (devices: SwitchDeviceDto[]): void => {
         this.store.dispatch(new SwitchesLoadAction({devices}));
+      },
+
+      openAddDeviceDialog: (): void => {
+        this.store.dispatch(new SwitchesOpenCreateDialogAction());
       }
     };
   }

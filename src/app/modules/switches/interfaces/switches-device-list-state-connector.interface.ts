@@ -6,4 +6,6 @@ export interface SwitchesDeviceListStateConnectorInterface {
   devices$: Observable<SwitchDeviceModel[]>;
 
   setDevices(devices: SwitchDeviceDto[]): void;
+
+  openAddDeviceDialog(): void;
 }
