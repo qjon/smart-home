@@ -26,9 +26,11 @@ export interface SwitchDeviceLastUpdateDto {
 
 export interface SwitchDeviceDto {
   deviceid: string;
+  apiKey: string;
   model: string;
   name?: string;
   version: string;
+  isSingleSwitch: boolean;
   isConnected: boolean;
   params: {
     switches: SwitchNameDto[];

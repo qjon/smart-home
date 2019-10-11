@@ -18,13 +18,16 @@ import {SmartHomeCoreModule} from '../../core/smart-home-core.module';
 import {DeviceBoxComponent} from './components/device-box/device-box.component';
 import {ErrorResponseInterceptorService} from './api/error-response-interceptor.service';
 import {DeviceOutletRenameEffectsService} from './store/device-outlet-rename-effects.service';
-import {SwitchesStateConnectorService} from './store/state-connectors/switches-state-connector.service';
 import {AddDeviceComponent} from './components/add-device/add-device.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {NotificationsModule} from '../notifications/notifications.module';
+import {DeviceDetailsComponent} from './components/device-details/device-details.component';
+import {SwitchesStateConnectorsModule} from './store/state-connectors/switches-state-connectors.module';
+import {MatSelectModule} from '@angular/material/select';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -34,6 +37,7 @@ import {NotificationsModule} from '../notifications/notifications.module';
     SwitchesListComponent,
     SwitchStatusComponent,
     TrueFalseComponent,
+    DeviceDetailsComponent,
   ],
   entryComponents: [
     AddDeviceComponent,
@@ -58,13 +62,15 @@ import {NotificationsModule} from '../notifications/notifications.module';
     SmartHomeCoreModule,
     StoreModule.forFeature(SWITCHES_STATE_NAME, switchesReducer),
     SwitchesRoutingModule,
+    SwitchesStateConnectorsModule,
     MatInputModule,
+    MatSelectModule,
+    MatCheckboxModule,
   ],
   providers: [
     ServerWebsocketService,
     SwitchesApiService,
     SwitchesRenameEffectsService,
-    SwitchesStateConnectorService,
     {provide: HTTP_INTERCEPTORS, useClass: ErrorResponseInterceptorService, multi: true},
   ],
   schemas: [

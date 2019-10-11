@@ -4,9 +4,10 @@ import {select, Store} from '@ngrx/store';
 import {switchesSelectors} from '../switches-selectors';
 import {SwitchDeviceDto} from '../../interfaces/switch-device.interface';
 import {SwitchesLoadAction, SwitchesOpenCreateDialogAction} from '../switches-actions';
+import {SwitchesStateConnectorsModule} from './switches-state-connectors.module';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: SwitchesStateConnectorsModule
 })
 export class SwitchesStateConnectorService implements SwitchesStateConnectorInterface {
 
@@ -14,7 +15,7 @@ export class SwitchesStateConnectorService implements SwitchesStateConnectorInte
     .pipe(
       select(switchesSelectors.switchesDeviceListSelector),
     );
-  
+
   constructor(protected store: Store<any>) {
   }
 

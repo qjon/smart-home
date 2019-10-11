@@ -1,0 +1,32 @@
+.device-info {
+  display: flex;
+  align-items: flex-start;
+  padding: 1em;
+
+  .device-image {
+    max-width: 400px;
+    flex: 1;
+  }
+
+  .device-details {
+    flex: 1;
+    display: flex;
+    flex-flow: column;
+    padding-left: 1em;
+  }
+}
+
+.switches {
+  display: flex;
+  justify-content: space-between;
+}
+
+mat-card-actions {
+  text-align: right;
+}
+
+mat-card-title {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}

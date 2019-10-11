@@ -1,6 +1,11 @@
 <mat-card [ngClass]="{disconnected: !device.isConnected}">
   <mat-card-header>
-    <span class="disconnected mat-caption" *ngIf="!device.isConnected">Disconnected</span>
+    <div class="info">
+      <mat-icon color="warn" *ngIf="!device.isConnected" title="Disconnected">power_off</mat-icon>
+      <button mat-icon-button [routerLink]="['..', 'device', device.id]">
+        <mat-icon>info_outlined</mat-icon>
+      </button>
+    </div>
     <mat-card-title>
       <sh-core-inline-edit [name]="device.name"
                            [renameError$]="getDeviceRenameErrorEffect()"
@@ -8,7 +13,6 @@
                            [maxLength]="35"
                            (onRename)="rename($event)"></sh-core-inline-edit>
     </mat-card-title>
-    <mat-card-subtitle>{{device.id}}</mat-card-subtitle>
   </mat-card-header>
   <mat-divider></mat-divider>
   <mat-card-content>

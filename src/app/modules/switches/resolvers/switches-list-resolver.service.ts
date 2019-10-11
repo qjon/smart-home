@@ -7,9 +7,7 @@ import {tap} from 'rxjs/operators';
 import {SwitchesDeviceListStateConnectorInterface} from '../interfaces/switches-device-list-state-connector.interface';
 import {SwitchesStateConnectorService} from '../store/state-connectors/switches-state-connector.service';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class SwitchesListResolverService implements Resolve<SwitchDeviceDto[]> {
   constructor(private switchesApiService: SwitchesApiService,
               @Inject(SwitchesStateConnectorService) public deviceListStateConnector: SwitchesDeviceListStateConnectorInterface) {
