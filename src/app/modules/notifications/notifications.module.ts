@@ -1,12 +1,12 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {SimpleNotificationsModule} from 'angular2-notifications';
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
-    MatSnackBarModule,
+    SimpleNotificationsModule,
   ],
 })
 export class NotificationsModule {

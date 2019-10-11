@@ -4,7 +4,7 @@ import {SwitchActionTypes, SwitchesRenameAction, SwitchesRenameErrorAction, Swit
 import {catchError, map, switchMap, tap} from 'rxjs/operators';
 import {SwitchesApiService} from '../api/switches-api.service';
 import {of} from 'rxjs';
-import {NotificationsService} from 'angular2-notifications';
+import {NotificationsService} from '../../notifications/notifications.service';
 
 @Injectable({
   providedIn: 'root'

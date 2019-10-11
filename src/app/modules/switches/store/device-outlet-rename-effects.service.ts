@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Actions, Effect, ofType} from '@ngrx/effects';
 import {SwitchesApiService} from '../api/switches-api.service';
-import {NotificationsService} from 'angular2-notifications';
 import {
   SwitchActionTypes,
   SwitchesRenameOutletAction,
@@ -10,6 +9,7 @@ import {
 } from './switches-actions';
 import {catchError, map, switchMap, tap} from 'rxjs/operators';
 import {of} from 'rxjs';
+import {NotificationsService} from '../../notifications/notifications.service';
 
 @Injectable({
   providedIn: 'root'
