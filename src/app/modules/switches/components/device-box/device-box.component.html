@@ -24,7 +24,7 @@
                       (change)="toggle($event)"></sh-switch-status>
   </mat-card-content>
   <mat-divider></mat-divider>
-  <mat-card-actions>
+  <mat-card-actions *ngIf="!device.isSingleSwitch">
     <sh-device-on-off [isEnabled]="device.isConnected" (toggle)="onOff($event)"></sh-device-on-off>
   </mat-card-actions>
 </mat-card>
