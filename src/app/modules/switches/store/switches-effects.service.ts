@@ -11,11 +11,12 @@ import {
   SwitchesOnOffAction,
   SwitchesOnOffSuccessAction
 } from './switches-actions';
-import {catchError, map, switchMap} from 'rxjs/operators';
+import {catchError, map, switchMap, tap} from 'rxjs/operators';
 import {SwitchesApiService} from '../api/switches-api.service';
 import {of} from 'rxjs';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {AddDeviceComponent} from '../components/add-device/add-device.component';
+import {NotificationsService} from '../../notifications/notifications.service';
 
 @Injectable({
   providedIn: 'root'
@@ -83,11 +84,31 @@ export class SwitchesEffectsService {
       catchError((e) => of(new SwitchesCreateErrorAction({error: e})))
     );
 
+  @Effect({dispatch: false})
+  public createEffectSuccess$ = this.actions$
+    .pipe(
+      ofType(SwitchActionTypes.CreateSuccess),
+      tap(() => {
+        this.addDialogRef.close();
+        this.notificationService.success('Create Device', 'Device has been created');
+      }),
+    );
+
+  @Effect({dispatch: false})
+  public createEffectError$ = this.actions$
+    .pipe(
+      ofType(SwitchActionTypes.CreateError),
+      tap(() => {
+        this.notificationService.success('Create Device', 'Device has not been created');
+      }),
+    );
+
 
   private addDialogRef: MatDialogRef<AddDeviceComponent>;
 
   constructor(protected actions$: Actions,
               protected switchesApiService: SwitchesApiService,
-              private matDialog: MatDialog) {
+              private matDialog: MatDialog,
+              private notificationService: NotificationsService) {
   }
 }

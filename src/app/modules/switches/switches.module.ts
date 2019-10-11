@@ -24,6 +24,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import {NotificationsModule} from '../notifications/notifications.module';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
     MatDividerModule,
     MatIconModule,
     MatToolbarModule,
+    NotificationsModule,
     ReactiveFormsModule,
     SmartHomeCoreModule,
     StoreModule.forFeature(SWITCHES_STATE_NAME, switchesReducer),
