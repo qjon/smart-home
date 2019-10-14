@@ -32,6 +32,7 @@ export interface SwitchDeviceDto {
   version: string;
   isSingleSwitch: boolean;
   isConnected: boolean;
+  lastStatusChangeTimestamp: string;
   params: {
     switches: SwitchNameDto[];
     configuration: SwitchDto[];

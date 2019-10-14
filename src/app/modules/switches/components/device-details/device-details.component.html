@@ -84,12 +84,17 @@
     </mat-card-content>
     <mat-divider></mat-divider>
     <mat-card-actions>
-      <button mat-raised-button type="button" *ngIf="isEditMode">Cancel</button>
-      <button mat-raised-button type="submit" *ngIf="isEditMode" color="primary">Save</button>
-      <button mat-raised-button type="button" *ngIf="!isEditMode" [disabled]="true" color="primary">
-        <mat-icon>edit</mat-icon>
-        Edit
-      </button>
+      <div class="last-update">
+        <sh-last-update [lastUpdate]="device.lastStatusChangeTimestamp"></sh-last-update>
+      </div>
+      <div class="actions">
+        <button mat-raised-button type="button" *ngIf="isEditMode">Cancel</button>
+        <button mat-raised-button type="submit" *ngIf="isEditMode" color="primary">Save</button>
+        <button mat-raised-button type="button" *ngIf="!isEditMode" [disabled]="true" color="primary">
+          <mat-icon>edit</mat-icon>
+          Edit
+        </button>
+      </div>
     </mat-card-actions>
   </mat-card>
 

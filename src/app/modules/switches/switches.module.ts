@@ -28,6 +28,7 @@ import {DeviceDetailsComponent} from './components/device-details/device-details
 import {SwitchesStateConnectorsModule} from './store/state-connectors/switches-state-connectors.module';
 import {MatSelectModule} from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { LastUpdateComponent } from './components/last-update/last-update.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     SwitchStatusComponent,
     TrueFalseComponent,
     DeviceDetailsComponent,
+    LastUpdateComponent,
   ],
   entryComponents: [
     AddDeviceComponent,

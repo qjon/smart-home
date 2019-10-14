@@ -8,6 +8,7 @@ export class SwitchDeviceModel {
   readonly apiKey: string;
   readonly isSingleSwitch: boolean;
   readonly isConnected: boolean;
+  readonly lastStatusChangeTimestamp: Date;
 
   public get status(): SwitchDto[] {
     return this.data.params.switches;
@@ -22,6 +23,7 @@ export class SwitchDeviceModel {
     this.apiKey = this.data.apiKey;
     this.isSingleSwitch = this.data.isSingleSwitch;
     this.isConnected = this.data.isConnected;
+    this.lastStatusChangeTimestamp = this.data.lastStatusChangeTimestamp ? new Date(this.data.lastStatusChangeTimestamp) : null;
 
 
     this.status.forEach((s: SwitchNameDto) => {
