@@ -22,18 +22,26 @@
                    placeholder="Enter device ID">
           </mat-form-field>
           <mat-form-field appearance="outline">
-            <mat-label>Name</mat-label>
+            <mat-label>Name {{form.controls['name'].hasError('length')}}</mat-label>
             <input matInput
                    [formControl]="form.controls['name']"
                    placeholder="Enter your name of the device">
-            <mat-error *ngIf="form.controls['name'].invalid">Device name is required</mat-error>
+            <mat-error *ngIf="form.controls['name'].invalid ">
+              <span *ngIf="form.controls['name'].hasError('required')">Device name is required</span>
+              <span *ngIf="form.controls['name'].hasError('maxlength')">Device name
+              should be shorter or equal 50 chars</span>
+            </mat-error>
           </mat-form-field>
           <mat-form-field appearance="outline">
             <mat-label>Api Key</mat-label>
             <input matInput
                    [formControl]="form.controls['apiKey']"
                    placeholder="Enter api key"/>
-            <mat-error *ngIf="form.controls['apiKey'].invalid">Api Key is required</mat-error>
+            <mat-error *ngIf="form.controls['apiKey'].invalid ">
+              <span *ngIf="form.controls['apiKey'].hasError('required')">Api Key is required</span>
+              <span *ngIf="form.controls['apiKey'].hasError('maxlength')">Device name
+              should be shorter or equal 100 chars</span>
+            </mat-error>
           </mat-form-field>
           <mat-form-field appearance="outline">
             <mat-label>Model</mat-label>
@@ -42,7 +50,9 @@
                 {{model}}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="form.controls['model'].invalid">Api Key is required</mat-error>
+            <mat-error *ngIf="form.controls['name'].invalid ">
+              <span *ngIf="form.controls['name'].hasError('required')">Device model name is required</span>
+            </mat-error>
           </mat-form-field>
           <mat-form-field appearance="outline">
             <mat-label>Is single switch</mat-label>
@@ -54,28 +64,46 @@
               <input matInput
                      [formControl]="form.controls['switches'].controls['0']"
                      placeholder="Enter switch name">
-              <mat-error *ngIf="form.controls['switches'].controls['0'].invalid">Switch name is required</mat-error>
+              <mat-error *ngIf="form.controls['switches'].controls['0'].invalid ">
+                <span *ngIf="form.controls['switches'].controls['0'].hasError('required')">Api Key is required</span>
+                <span *ngIf="form.controls['switches'].controls['0'].hasError('maxlength')">Device name
+              should be shorter or equal 50 chars</span>
+              </mat-error>
             </mat-form-field>
             <mat-form-field appearance="outline">
               <mat-label>Switch 2 name</mat-label>
               <input matInput
                      [formControl]="form.controls['switches'].controls['1']"
                      placeholder="Enter switch name">
-              <mat-error *ngIf="form.controls['switches'].controls['1'].invalid">Switch name is required</mat-error>
+              <mat-error *ngIf="form.controls['switches'].controls['1'].invalid ">
+                <span *ngIf="form.controls['switches'].controls['1'].hasError('required')">Api Key is required</span>
+                <span *ngIf="form.controls['switches'].controls['1'].hasError('maxlength')">Device name
+              should be shorter or equal 50 chars</span>
+              </mat-error>
             </mat-form-field>
             <mat-form-field appearance="outline">
               <mat-label>Switch 3 name</mat-label>
               <input matInput
                      [formControl]="form.controls['switches'].controls['2']"
                      placeholder="Enter switch name">
-              <mat-error *ngIf="form.controls['switches'].controls['2'].invalid">Switch name is required</mat-error>
+
+              <mat-error *ngIf="form.controls['switches'].controls['2'].invalid ">
+                <span *ngIf="form.controls['switches'].controls['2'].hasError('required')">Api Key is required</span>
+                <span *ngIf="form.controls['switches'].controls['2'].hasError('maxlength')">Device name
+              should be shorter or equal 50 chars</span>
+              </mat-error>
             </mat-form-field>
             <mat-form-field appearance="outline">
               <mat-label>Switch 4 name</mat-label>
               <input matInput
                      [formControl]="form.controls['switches'].controls['3']"
                      placeholder="Enter switch name">
-              <mat-error *ngIf="form.controls['switches'].controls['3'].invalid">Switch name is required</mat-error>
+
+              <mat-error *ngIf="form.controls['switches'].controls['3'].invalid ">
+                <span *ngIf="form.controls['switches'].controls['3'].hasError('required')">Api Key is required</span>
+                <span *ngIf="form.controls['switches'].controls['3'].hasError('maxlength')">Device name
+              should be shorter or equal 50 chars</span>
+              </mat-error>
             </mat-form-field>
           </div>
         </div>

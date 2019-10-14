@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {SwitchesStateConnectorInterface} from '../../interfaces/switches-state-connector.interface';
 import {select, Store} from '@ngrx/store';
 import {switchesSelectors} from '../switches-selectors';
-import {SwitchDeviceDto} from '../../interfaces/switch-device.interface';
-import {SwitchesLoadAction, SwitchesOpenCreateDialogAction} from '../switches-actions';
+import {SwitchDeviceDto, SwitchDto, SwitchStatus} from '../../interfaces/switch-device.interface';
+import {SwitchesChangeStatusAction, SwitchesLoadAction, SwitchesOnOffAction, SwitchesOpenCreateDialogAction} from '../switches-actions';
 import {SwitchesStateConnectorsModule} from './switches-state-connectors.module';
 
 @Injectable({
@@ -25,6 +25,16 @@ export class SwitchesStateConnectorService implements SwitchesStateConnectorInte
 
   public openAddDeviceDialog(): void {
     this.store.dispatch(new SwitchesOpenCreateDialogAction());
+  }
+
+  public toggle(deviceId: string, switchStatus: SwitchDto) {
+    this.store.dispatch(new SwitchesChangeStatusAction({deviceId, switch: switchStatus}));
+  }
+
+  public onOff(deviceId: string, state: boolean): void {
+    const status = state ? SwitchStatus.ON : SwitchStatus.OFF;
+
+    this.store.dispatch(new SwitchesOnOffAction({deviceId, status}));
   }
 
 }

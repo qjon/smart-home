@@ -47,17 +47,17 @@ export class DeviceDetailsComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
 
     this.switches = this.fb.group({
-      0: [null, Validators.required],
-      1: [null, Validators.required],
-      2: [null, Validators.required],
-      3: [null, Validators.required],
+      0: [null, [Validators.required, Validators.maxLength(50)]],
+      1: [null, [Validators.required, Validators.maxLength(50)]],
+      2: [null, [Validators.required, Validators.maxLength(50)]],
+      3: [null, [Validators.required, Validators.maxLength(50)]],
     });
 
     this.form = this.fb.group({
-      name: [null],
-      deviceId: [null, Validators.required],
-      apiKey: [null, Validators.required],
-      model: [null, Validators.required],
+      deviceId: [null],
+      name: [null, [Validators.required, Validators.maxLength(50)]],
+      apiKey: [null, [Validators.required, Validators.maxLength(100)]],
+      model: [null, [Validators.required, Validators.maxLength(50)]],
       isSingleSwitch: [{value: null, disabled: true}],
       switches: this.switches
     });

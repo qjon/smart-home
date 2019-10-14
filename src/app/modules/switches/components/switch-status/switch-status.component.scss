@@ -5,13 +5,12 @@
   overflow: hidden;
   text-overflow: ellipsis;
   text-align: center;
+  white-space: nowrap;
 }
 
 
 .switch-status {
   display: inline-block;
-  margin-right: 10px;
-  margin-bottom: 20px;
 
   .switch-status-wrapper {
     display: flex;

@@ -1,9 +1,7 @@
-import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Inject, Input} from '@angular/core';
 import {SwitchDeviceModel} from '../../models/switch-device-model';
-import {SwitchesChangeStatusAction, SwitchesOnOffAction} from '../../store/switches-actions';
-import {SwitchDto, SwitchStatus} from '../../interfaces/switch-device.interface';
-import {Store} from '@ngrx/store';
-import {SwitchesState} from '../../store/switches-reducer';
+import {SwitchesStateConnectorService} from '../../store/state-connectors/switches-state-connector.service';
+import {SwitchesStateConnectorInterface} from '../../interfaces/switches-state-connector.interface';
 
 @Component({
   selector: 'sh-device-box',
@@ -16,17 +14,6 @@ export class DeviceBoxComponent {
   @Input()
   public device: SwitchDeviceModel;
 
-  constructor(private store: Store<SwitchesState>) {
+  constructor(@Inject(SwitchesStateConnectorService) public switchesStateConnectorService: SwitchesStateConnectorInterface) {
   }
-
-  public toggle(switchStatus: SwitchDto) {
-    this.store.dispatch(new SwitchesChangeStatusAction({deviceId: this.device.id, switch: switchStatus}));
-  }
-
-  public onOff(state: boolean): void {
-    const status = state ? SwitchStatus.ON : SwitchStatus.OFF;
-
-    this.store.dispatch(new SwitchesOnOffAction({deviceId: this.device.id, status}));
-  }
-
 }
