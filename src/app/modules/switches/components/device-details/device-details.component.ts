@@ -1,9 +1,13 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
-import {map, take, tap} from 'rxjs/operators';
+import {map, switchMap, take, takeUntil} from 'rxjs/operators';
 import {DeviceDetailsStateConnectorService} from '../../store/state-connectors/device-details-state-connector.service';
 import {SwitchDeviceModel} from '../../models/switch-device-model';
+import {SwitchDeviceChangeSettingsDto} from '../../interfaces/switch-device.interface';
+import {Actions, ofType} from '@ngrx/effects';
+import {SwitchActionTypes} from '../../store/switches-actions';
+import {ReplaySubject} from 'rxjs';
 
 @Component({
   selector: 'sh-device-details',
@@ -23,68 +27,106 @@ export class DeviceDetailsComponent implements OnInit, OnDestroy {
     'T1EU',
     'S26E',
   ];
+  public actionButtonsDisabled = false;
+
+  public destroy$ = new ReplaySubject<void>();
 
   constructor(private fb: FormBuilder,
               private activatedRoute: ActivatedRoute,
-              private deviceDetailsStateConnectorService: DeviceDetailsStateConnectorService) {
+              private deviceDetailsStateConnectorService: DeviceDetailsStateConnectorService,
+              private actions$: Actions) {
   }
 
   public ngOnDestroy(): void {
     this.deviceDetailsStateConnectorService.setCurrentDeviceId(null);
+
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   public ngOnInit(): void {
 
     this.switches = this.fb.group({
-      o0: [null, Validators.required],
-      o1: [null, Validators.required],
-      o2: [null, Validators.required],
-      o3: [null, Validators.required],
+      0: [null, Validators.required],
+      1: [null, Validators.required],
+      2: [null, Validators.required],
+      3: [null, Validators.required],
     });
 
     this.form = this.fb.group({
-      name: [null, Validators.required],
+      name: [null],
       deviceId: [null, Validators.required],
       apiKey: [null, Validators.required],
       model: [null, Validators.required],
-      isSingleSwitch: [{value: null, disabled: true}, Validators.required],
+      isSingleSwitch: [{value: null, disabled: true}],
       switches: this.switches
     });
 
     this.disableForm();
 
+    const device$ =
+      this.deviceDetailsStateConnectorService.device$
+        .pipe(
+          take(1), // not refresh form if update from device arrived
+          takeUntil(this.destroy$),
+        );
+
     this.activatedRoute.params
       .pipe(
         map((params) => params['id']),
-        tap((id) => console.log(id)),
+        takeUntil(this.destroy$),
       )
       .subscribe((id) => this.deviceDetailsStateConnectorService.setCurrentDeviceId(id));
 
-    this.deviceDetailsStateConnectorService.device$
-      .pipe(
-        take(1) // not refresh form if update from device arrived
-      )
+    device$
       .subscribe((device: SwitchDeviceModel) => {
         this.device = device;
 
-        this.form.reset({
-          name: device.name,
-          deviceId: device.id,
-          apiKey: device.apiKey,
-          model: device.model,
-          isSingleSwitch: device.isSingleSwitch,
-          switches: {
-            o0: device.switches.get(0).name,
-            o1: device.switches.has(1) ? device.switches.get(1).name : null,
-            o2: device.switches.has(2) ? device.switches.get(2).name : null,
-            o3: device.switches.has(3) ? device.switches.get(3).name : null,
-          }
-        });
+        this.form.reset(this.prepareFormValues(device));
+      });
+
+    this.actions$
+      .pipe(
+        ofType(SwitchActionTypes.ChangeSettingsSuccess),
+        switchMap(() => device$),
+        takeUntil(this.destroy$),
+      )
+      .subscribe((device: SwitchDeviceModel) => {
+        this.device = device;
+        this.form.reset(this.prepareFormValues(device));
+
+        this.disableForm();
+        this.isEditMode = false;
+        this.enableActionButtons();
+      });
+
+    this.actions$
+      .pipe(
+        ofType(SwitchActionTypes.ChangeSettingsError),
+        takeUntil(this.destroy$),
+      )
+      .subscribe(() => {
+        this.enableActionButtons();
       });
   }
 
   public onSubmit(): void {
-    console.log(this.form.value);
+    if (this.form.valid) {
+      this.disableForm();
+      this.disableActionButtons();
+      this.deviceDetailsStateConnectorService.update(this.device.id, this.prepareValuesToSend(this.form.value));
+    }
+  }
+
+  public cancelEditMode(): void {
+    this.isEditMode = false;
+    this.form.reset(this.prepareFormValues(this.device));
+    this.disableForm();
+  }
+
+  public openEditMode(): void {
+    this.isEditMode = true;
+    this.enableForm();
   }
 
 
@@ -95,10 +137,50 @@ export class DeviceDetailsComponent implements OnInit, OnDestroy {
   private enableForm(): void {
     this.form.enable();
     this.form.controls['isSingleSwitch'].disable();
+    this.form.controls['deviceId'].disable();
 
     for (let i = this.device.switches.size; i < 4; i++) {
-      this.switches.controls[`o${i}`].disable();
+      this.switches.controls[i].disable();
     }
   }
 
+  private prepareFormValues(device): { [key: string]: any } {
+    return {
+      name: device.name,
+      deviceId: device.id,
+      apiKey: device.apiKey,
+      model: device.model,
+      isSingleSwitch: device.isSingleSwitch,
+      switches: {
+        0: device.switches.get(0).name,
+        1: device.switches.has(1) ? device.switches.get(1).name : null,
+        2: device.switches.has(2) ? device.switches.get(2).name : null,
+        3: device.switches.has(3) ? device.switches.get(3).name : null,
+      }
+    };
+  }
+
+  private prepareValuesToSend(value: any): SwitchDeviceChangeSettingsDto {
+    const switches = [
+      {outlet: 0, name: this.switches.controls[0].value},
+      {outlet: 1, name: this.switches.controls[1].value},
+      {outlet: 2, name: this.switches.controls[2].value},
+      {outlet: 3, name: this.switches.controls[3].value},
+    ];
+
+    return {
+      name: value.name,
+      apiKey: value.apiKey,
+      model: value.model,
+      switches
+    };
+  }
+
+  private enableActionButtons() {
+    this.actionButtonsDisabled = false;
+  }
+
+  private disableActionButtons() {
+    this.actionButtonsDisabled = true;
+  }
 }

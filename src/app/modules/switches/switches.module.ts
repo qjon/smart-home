@@ -13,11 +13,10 @@ import {SwitchesEffectsService} from './store/switches-effects.service';
 import {TrueFalseComponent} from './components/true-false/true-false.component';
 import {DeviceOnOffComponent} from './components/device-on-off/device-on-off.component';
 import {ServerWebsocketService} from './websocket/server-websocket.service';
-import {SwitchesRenameEffectsService} from './store/switches-rename-effects.service';
+import {SwitchesSettingsEffectsService} from './store/switches-settings-effects.service';
 import {SmartHomeCoreModule} from '../../core/smart-home-core.module';
 import {DeviceBoxComponent} from './components/device-box/device-box.component';
 import {ErrorResponseInterceptorService} from './api/error-response-interceptor.service';
-import {DeviceOutletRenameEffectsService} from './store/device-outlet-rename-effects.service';
 import {AddDeviceComponent} from './components/add-device/add-device.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import {ReactiveFormsModule} from '@angular/forms';
@@ -28,7 +27,7 @@ import {DeviceDetailsComponent} from './components/device-details/device-details
 import {SwitchesStateConnectorsModule} from './store/state-connectors/switches-state-connectors.module';
 import {MatSelectModule} from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import { LastUpdateComponent } from './components/last-update/last-update.component';
+import {LastUpdateComponent} from './components/last-update/last-update.component';
 
 @NgModule({
   declarations: [
@@ -47,9 +46,8 @@ import { LastUpdateComponent } from './components/last-update/last-update.compon
   imports: [
     CommonModule,
     EffectsModule.forFeature([
-      DeviceOutletRenameEffectsService,
       SwitchesEffectsService,
-      SwitchesRenameEffectsService,
+      SwitchesSettingsEffectsService,
     ]),
     HttpClientModule,
     MatButtonModule,
@@ -72,7 +70,7 @@ import { LastUpdateComponent } from './components/last-update/last-update.compon
   providers: [
     ServerWebsocketService,
     SwitchesApiService,
-    SwitchesRenameEffectsService,
+    SwitchesSettingsEffectsService,
     {provide: HTTP_INTERCEPTORS, useClass: ErrorResponseInterceptorService, multi: true},
   ],
   schemas: [

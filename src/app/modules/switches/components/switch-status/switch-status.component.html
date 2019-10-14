@@ -1,14 +1,9 @@
 <div class="switch-status">
   <div class="switch-status-wrapper">
-    <sh-core-inline-edit class="name"
-                         [name]="switchModel.name"
-                         [maxLength]="10"
-                         [renameError$]="getDeviceSwitchRenameErrorEffect()"
-                         [renameSuccess$]="getDeviceSwitchRenameSuccessEffect()"
-                         (onRename)="onRename.next($event)"
-    ></sh-core-inline-edit>
+    <div class="switch-name" title="{{switchModel.name}}">{{switchModel.name}}</div>
     <div class="status">
-      <sh-device-on-off [isEnabled]="isEnabled" (toggle)="toggle($event)"
+      <sh-device-on-off [isEnabled]="isEnabled"
+                        (toggle)="toggle($event)"
                         [value]="switchModel.status"
                         [size]="'5em'"></sh-device-on-off>
     </div>

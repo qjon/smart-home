@@ -2,7 +2,7 @@
   <mat-card>
     <mat-card-header>
       <mat-card-title>
-        <button mat-icon-button [routerLink]="['..', '..', 'list']">
+        <button type="button" mat-icon-button [routerLink]="['..', '..', 'list']">
           <mat-icon>arrow_back</mat-icon>
         </button>
         <span class="title">{{device.name}}</span>
@@ -16,18 +16,17 @@
         </div>
         <div class="device-details">
           <mat-form-field appearance="outline">
+            <mat-label>Device ID</mat-label>
+            <input matInput
+                   [formControl]="form.controls['deviceId']"
+                   placeholder="Enter device ID">
+          </mat-form-field>
+          <mat-form-field appearance="outline">
             <mat-label>Name</mat-label>
             <input matInput
                    [formControl]="form.controls['name']"
                    placeholder="Enter your name of the device">
             <mat-error *ngIf="form.controls['name'].invalid">Device name is required</mat-error>
-          </mat-form-field>
-          <mat-form-field appearance="outline">
-            <mat-label>Device ID</mat-label>
-            <input matInput
-                   [formControl]="form.controls['deviceId']"
-                   placeholder="Enter device ID">
-            <mat-error *ngIf="form.controls['deviceId'].invalid">Device ID is required</mat-error>
           </mat-form-field>
           <mat-form-field appearance="outline">
             <mat-label>Api Key</mat-label>
@@ -53,30 +52,30 @@
             <mat-form-field appearance="outline">
               <mat-label>Switch 1 name</mat-label>
               <input matInput
-                     [formControl]="form.controls['switches'].controls['o0']"
+                     [formControl]="form.controls['switches'].controls['0']"
                      placeholder="Enter switch name">
-              <mat-error *ngIf="form.controls['switches'].controls['o0'].invalid">Switch name is required</mat-error>
+              <mat-error *ngIf="form.controls['switches'].controls['0'].invalid">Switch name is required</mat-error>
             </mat-form-field>
             <mat-form-field appearance="outline">
               <mat-label>Switch 2 name</mat-label>
               <input matInput
-                     [formControl]="form.controls['switches'].controls['o1']"
+                     [formControl]="form.controls['switches'].controls['1']"
                      placeholder="Enter switch name">
-              <mat-error *ngIf="form.controls['switches'].controls['o1'].invalid">Switch name is required</mat-error>
+              <mat-error *ngIf="form.controls['switches'].controls['1'].invalid">Switch name is required</mat-error>
             </mat-form-field>
             <mat-form-field appearance="outline">
               <mat-label>Switch 3 name</mat-label>
               <input matInput
-                     [formControl]="form.controls['switches'].controls['o2']"
+                     [formControl]="form.controls['switches'].controls['2']"
                      placeholder="Enter switch name">
-              <mat-error *ngIf="form.controls['switches'].controls['o2'].invalid">Switch name is required</mat-error>
+              <mat-error *ngIf="form.controls['switches'].controls['2'].invalid">Switch name is required</mat-error>
             </mat-form-field>
             <mat-form-field appearance="outline">
               <mat-label>Switch 4 name</mat-label>
               <input matInput
-                     [formControl]="form.controls['switches'].controls['o3']"
+                     [formControl]="form.controls['switches'].controls['3']"
                      placeholder="Enter switch name">
-              <mat-error *ngIf="form.controls['switches'].controls['o3'].invalid">Switch name is required</mat-error>
+              <mat-error *ngIf="form.controls['switches'].controls['3'].invalid">Switch name is required</mat-error>
             </mat-form-field>
           </div>
         </div>
@@ -88,9 +87,13 @@
         <sh-last-update [lastUpdate]="device.lastStatusChangeTimestamp"></sh-last-update>
       </div>
       <div class="actions">
-        <button mat-raised-button type="button" *ngIf="isEditMode">Cancel</button>
-        <button mat-raised-button type="submit" *ngIf="isEditMode" color="primary">Save</button>
-        <button mat-raised-button type="button" *ngIf="!isEditMode" [disabled]="true" color="primary">
+        <button mat-raised-button type="button" *ngIf="isEditMode" (click)="cancelEditMode()"
+                [disabled]="actionButtonsDisabled">Cancel
+        </button>
+        <button mat-raised-button type="submit" *ngIf="isEditMode" color="primary" [disabled]="actionButtonsDisabled">
+          Save
+        </button>
+        <button mat-raised-button type="button" *ngIf="!isEditMode" (click)="openEditMode()" color="primary">
           <mat-icon>edit</mat-icon>
           Edit
         </button>

@@ -9,13 +9,7 @@
         <mat-icon>info_outlined</mat-icon>
       </button>
     </div>
-    <mat-card-title>
-      <sh-core-inline-edit [name]="device.name"
-                           [renameError$]="getDeviceRenameErrorEffect()"
-                           [renameSuccess$]="getDeviceRenameSuccessEffect()"
-                           [maxLength]="35"
-                           (onRename)="rename($event)"></sh-core-inline-edit>
-    </mat-card-title>
+    <mat-card-title>{{device.name}}</mat-card-title>
   </mat-card-header>
   <mat-divider></mat-divider>
   <mat-card-content>
@@ -23,7 +17,6 @@
                       [isEnabled]="device.isConnected"
                       [deviceId]="device.id"
                       [switchModel]="device.switches.get(outlet)"
-                      (onRename)="renameSwitch(outlet, $event)"
                       (change)="toggle($event)"></sh-switch-status>
   </mat-card-content>
   <mat-divider></mat-divider>

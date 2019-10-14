@@ -1,10 +1,13 @@
-import {SwitchDeviceDto, SwitchDto, SwitchStatus} from '../interfaces/switch-device.interface';
+import {SwitchDeviceChangeSettingsDto, SwitchDeviceDto, SwitchDto, SwitchStatus} from '../interfaces/switch-device.interface';
 import {Action} from '@ngrx/store';
 
 export enum SwitchActionTypes {
   Create = '[Switches] Create',
   CreateError = '[Switches] Create error',
   CreateSuccess = '[Switches] Create success',
+  ChangeSettings = '[Switches] Change Settings',
+  ChangeSettingsError = '[Switches] Change Settings error',
+  ChangeSettingsSuccess = '[Switches] Change Settings success',
   Load = '[Switches] Load',
   ChangeStatus = '[Switches] Change status',
   ChangeStatusError = '[Switches] Change status error',
@@ -13,12 +16,6 @@ export enum SwitchActionTypes {
   OnOff = '[Switches] Turn on/off',
   OnOffSuccess = '[Switches] Turn on/off success',
   OpenCreateDialog = '[Switches] Open create dialog',
-  Rename = '[Switches] Rename device',
-  RenameError = '[Switches] Rename device error',
-  RenameSuccess = '[Switches] Rename device success',
-  RenameOutlet = '[Switches] Rename device outlet',
-  RenameOutletError = '[Switches] Rename device outlet error',
-  RenameOutletSuccess = '[Switches] Rename device outlet success',
   Update = '[Switches] Update device'
 }
 
@@ -39,6 +36,30 @@ export class SwitchesCreateErrorAction implements Action {
 
 export class SwitchesCreateSuccessAction implements Action {
   readonly type = SwitchActionTypes.CreateSuccess;
+}
+
+export class SwitchesChangeSettingsAction implements Action {
+  readonly type = SwitchActionTypes.ChangeSettings;
+
+  constructor(public payload: { deviceId: string, data: SwitchDeviceChangeSettingsDto }) {
+
+  }
+}
+
+export class SwitchesChangeSettingsSuccessAction implements Action {
+  readonly type = SwitchActionTypes.ChangeSettingsSuccess;
+
+  constructor(public payload: { deviceId: string, data: SwitchDeviceChangeSettingsDto }) {
+
+  }
+}
+
+export class SwitchesChangeSettingsErrorAction implements Action {
+  readonly type = SwitchActionTypes.ChangeSettingsError;
+
+  constructor(public payload: { error: any }) {
+
+  }
 }
 
 export class SwitchesLoadAction implements Action {
@@ -98,54 +119,6 @@ export class SwitchesOnOffSuccessAction implements Action {
   }
 }
 
-export class SwitchesRenameAction implements Action {
-  readonly type = SwitchActionTypes.Rename;
-
-  constructor(public payload: { deviceId: string, name: string }) {
-
-  }
-}
-
-export class SwitchesRenameErrorAction implements Action {
-  readonly type = SwitchActionTypes.RenameError;
-
-  constructor(public payload: { deviceId: string }) {
-
-  }
-}
-
-export class SwitchesRenameSuccessAction implements Action {
-  readonly type = SwitchActionTypes.RenameSuccess;
-
-  constructor(public payload: { deviceId: string }) {
-
-  }
-}
-
-export class SwitchesRenameOutletAction implements Action {
-  readonly type = SwitchActionTypes.RenameOutlet;
-
-  constructor(public payload: { deviceId: string, outlet: number, name: string }) {
-
-  }
-}
-
-export class SwitchesRenameOutletErrorAction implements Action {
-  readonly type = SwitchActionTypes.RenameOutletError;
-
-  constructor(public payload: { deviceId: string, outlet: number }) {
-
-  }
-}
-
-export class SwitchesRenameOutletSuccessAction implements Action {
-  readonly type = SwitchActionTypes.RenameOutletSuccess;
-
-  constructor(public payload: { deviceId: string, outlet: number }) {
-
-  }
-}
-
 export class SwitchesUpdateAction implements Action {
   readonly type = SwitchActionTypes.Update;
 
@@ -158,6 +131,9 @@ export type SwitchesAction =
   SwitchesCreateAction
   | SwitchesCreateErrorAction
   | SwitchesCreateSuccessAction
+  | SwitchesChangeSettingsAction
+  | SwitchesChangeSettingsErrorAction
+  | SwitchesChangeSettingsSuccessAction
   | SwitchesLoadAction
   | SwitchesChangeStatusAction
   | SwitchesChangeStatusErrorAction
@@ -166,11 +142,5 @@ export type SwitchesAction =
   | SwitchesOnOffAction
   | SwitchesOnOffSuccessAction
   | SwitchesOpenCreateDialogAction
-  | SwitchesRenameAction
-  | SwitchesRenameErrorAction
-  | SwitchesRenameSuccessAction
-  | SwitchesRenameOutletAction
-  | SwitchesRenameOutletErrorAction
-  | SwitchesRenameOutletSuccessAction
   | SwitchesUpdateAction
   ;

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {SwitchDeviceDto, SwitchDto, SwitchStatus} from '../interfaces/switch-device.interface';
+import {SwitchDeviceChangeSettingsDto, SwitchDeviceDto, SwitchDto, SwitchStatus} from '../interfaces/switch-device.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +31,10 @@ export class SwitchesApiService {
 
   public renameSwitch(deviceId: string, outlet: string, name: string): Observable<any> {
     return this.httpClient.put<any>(this.host + `/api/devices/${deviceId}/outlet/${outlet.toString()}/rename`, {name});
+  }
+
+  public update(deviceId: string, data: SwitchDeviceChangeSettingsDto): Observable<any> {
+    return this.httpClient.put<any>(this.host + `/api/devices/${deviceId}/settings`, data);
   }
 
   public toggleAll(deviceId: string, state: SwitchStatus): Observable<boolean> {

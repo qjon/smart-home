@@ -39,3 +39,14 @@ export interface SwitchDeviceDto {
   };
   rawMessageLastUpdate: SwitchDeviceLastUpdateDto;
 }
+
+
+export interface SwitchDeviceChangeSettingsDto {
+  apiKey: string;
+  model: string;
+  name?: string;
+  switches: {
+    outlet: number;
+    name: string;
+  }[];
+}

@@ -5,6 +5,8 @@ import {Observable, ReplaySubject} from 'rxjs';
 import {switchMap} from 'rxjs/operators';
 import {switchesSelectors} from '../switches-selectors';
 import {SwitchDeviceModel} from '../../models/switch-device-model';
+import {SwitchDeviceChangeSettingsDto} from '../../interfaces/switch-device.interface';
+import {SwitchesChangeSettingsAction} from '../switches-actions';
 
 @Injectable({
   providedIn: SwitchesStateConnectorsModule
@@ -26,5 +28,9 @@ export class DeviceDetailsStateConnectorService {
 
   public setCurrentDeviceId(id: string): void {
     this.currentDeviceId.next(id);
+  }
+
+  public update(deviceId: string, data: SwitchDeviceChangeSettingsDto) {
+    this.store.dispatch(new SwitchesChangeSettingsAction({deviceId, data}));
   }
 }
