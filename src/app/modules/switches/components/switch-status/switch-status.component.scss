@@ -17,6 +17,27 @@
 
   }
 
+  .status {
+    display: inline-block;
+
+    button {
+      width: 5em !important;
+      height: 5em !important;
+      line-height: 5em !important;
+    }
+
+    mat-icon {
+      font-size: 5em !important;
+      line-height: 1em !important;
+      width: 1em !important;
+      height: 1em !important;
+
+      &.on {
+        color: $primary;
+      }
+    }
+  }
+
 
   .mat-button-toggle-checked {
     &.on {

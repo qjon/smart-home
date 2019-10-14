@@ -7,13 +7,10 @@
                          [renameSuccess$]="getDeviceSwitchRenameSuccessEffect()"
                          (onRename)="onRename.next($event)"
     ></sh-core-inline-edit>
-    <mat-button-toggle-group [disabled]="!isEnabled"
-                             [value]="switchModel.status"
-                             (change)="toggle($event)"
-                             class="status">
-      <mat-button-toggle [value]="availableValues.ON" class="on">{{availableValues.ON | uppercase}}</mat-button-toggle>
-      <mat-button-toggle [value]="availableValues.OFF"
-                         class="off">{{availableValues.OFF | uppercase}}</mat-button-toggle>
-    </mat-button-toggle-group>
+    <div class="status">
+      <sh-device-on-off [isEnabled]="isEnabled" (toggle)="toggle($event)"
+                        [value]="switchModel.status"
+                        [size]="'5em'"></sh-device-on-off>
+    </div>
   </div>
 </div>

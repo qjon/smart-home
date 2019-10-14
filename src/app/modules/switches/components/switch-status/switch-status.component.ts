@@ -1,6 +1,5 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {SwitchDto, SwitchStatus} from '../../interfaces/switch-device.interface';
-import {MatButtonToggleChange} from '@angular/material';
 import {Observable} from 'rxjs';
 import {filter, tap} from 'rxjs/operators';
 import {SwitchModel} from '../../models/switch-model';
@@ -45,8 +44,8 @@ export class SwitchStatusComponent implements OnInit {
   ngOnInit() {
   }
 
-  public toggle(change: MatButtonToggleChange): void {
-    this.change.emit({outlet: this.switchModel.outlet, switch: change.value});
+  public toggle(value: boolean): void {
+    this.change.emit({outlet: this.switchModel.outlet, switch: value ? SwitchStatus.ON : SwitchStatus.OFF});
   }
 
   public getDeviceSwitchRenameErrorEffect(): Observable<any> {

@@ -2,6 +2,9 @@
   <mat-card-header>
     <div class="info">
       <mat-icon color="warn" *ngIf="!device.isConnected" title="Disconnected">power_off</mat-icon>
+      <sh-device-on-off *ngIf="!device.isSingleSwitch && device.isConnected"
+                        [isEnabled]="true"
+                        (toggle)="onOff($event)"></sh-device-on-off>
       <button mat-icon-button [routerLink]="['..', 'device', device.id]">
         <mat-icon>info_outlined</mat-icon>
       </button>
@@ -24,7 +27,7 @@
                       (change)="toggle($event)"></sh-switch-status>
   </mat-card-content>
   <mat-divider></mat-divider>
-  <mat-card-actions *ngIf="!device.isSingleSwitch">
-    <sh-device-on-off [isEnabled]="device.isConnected" (toggle)="onOff($event)"></sh-device-on-off>
+  <mat-card-actions>
+    <span class="last-update-date">Last update</span>
   </mat-card-actions>
 </mat-card>
