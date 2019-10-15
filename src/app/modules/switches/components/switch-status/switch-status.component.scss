@@ -1,9 +1,16 @@
 @import "../../../../../variables";
 
+.switch-name {
+  width: 5em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+  white-space: nowrap;
+}
+
+
 .switch-status {
   display: inline-block;
-  margin-right: 10px;
-  margin-bottom: 20px;
 
   .switch-status-wrapper {
     display: flex;
@@ -17,18 +24,8 @@
 
   }
 
-
-  .mat-button-toggle-checked {
-    &.on {
-      color: $fontInverseColor;
-      background-color: $primary;
-    }
-
-    &.off {
-      background-color: $warn;
-      color: $fontInverseColor;
-    }
-
+  .status {
+    display: inline-block;
   }
 }
 

@@ -1,3 +1,10 @@
+<div class="actions-bar">
+  <button mat-raised-button color="primary" (click)="deviceListStateConnector.openAddDeviceDialog()">
+    <mat-icon>add_circle_outline</mat-icon>
+    Add device
+  </button>
+</div>
 <div class="devices-list">
-  <sh-device-box *ngFor="let item of device$ | async; trackBy: trackSwitch" [device]="item"></sh-device-box>
+  <sh-device-box *ngFor="let item of deviceListStateConnector.devices$ | async; trackBy: trackSwitch"
+                 [device]="item"></sh-device-box>
 </div>

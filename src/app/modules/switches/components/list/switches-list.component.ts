@@ -1,30 +1,15 @@
-import {Component, OnInit} from '@angular/core';
-import {SwitchesState} from '../../store/switches-reducer';
-import {select, Store} from '@ngrx/store';
-import {Observable} from 'rxjs';
-import {switchesSelectors} from '../../store/switches-selectors';
+import {Component, Inject} from '@angular/core';
 import {SwitchDeviceModel} from '../../models/switch-device-model';
-import {SwitchesRenameEffectsService} from '../../store/switches-rename-effects.service';
+import {SwitchesDeviceListStateConnectorInterface} from '../../interfaces/switches-device-list-state-connector.interface';
+import {SwitchesStateConnectorService} from '../../store/state-connectors/switches-state-connector.service';
 
 @Component({
   selector: 'sh-list',
   templateUrl: './switches-list.component.html',
   styleUrls: ['./switches-list.component.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SwitchesListComponent implements OnInit {
-
-  public device$: Observable<SwitchDeviceModel[]>;
-
-  constructor(private store: Store<SwitchesState>,
-              private switchesRenameEffects: SwitchesRenameEffectsService) {
-  }
-
-  public ngOnInit(): void {
-    this.device$ = this.store
-      .pipe(
-        select(switchesSelectors.switchesDeviceListSelector),
-      );
+export class SwitchesListComponent {
+  constructor(@Inject(SwitchesStateConnectorService) public deviceListStateConnector: SwitchesDeviceListStateConnectorInterface) {
   }
 
   public trackSwitch(item: SwitchDeviceModel): string {

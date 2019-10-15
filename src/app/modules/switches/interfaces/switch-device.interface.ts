@@ -26,13 +26,27 @@ export interface SwitchDeviceLastUpdateDto {
 
 export interface SwitchDeviceDto {
   deviceid: string;
+  apiKey: string;
   model: string;
   name?: string;
   version: string;
+  isSingleSwitch: boolean;
   isConnected: boolean;
+  lastStatusChangeTimestamp: string;
   params: {
     switches: SwitchNameDto[];
     configuration: SwitchDto[];
   };
   rawMessageLastUpdate: SwitchDeviceLastUpdateDto;
+}
+
+
+export interface SwitchDeviceChangeSettingsDto {
+  apiKey: string;
+  model: string;
+  name?: string;
+  switches: {
+    outlet: number;
+    name: string;
+  }[];
 }

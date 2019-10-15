@@ -2,17 +2,13 @@ import {SwitchDeviceDto, SwitchDto, SwitchNameDto} from '../interfaces/switch-de
 import {SwitchModel} from './switch-model';
 
 export class SwitchDeviceModel {
-  public get id(): string {
-    return this.data.deviceid;
-  }
-
-  public get name(): string {
-    return this.data.name || this.data.model;
-  }
-
-  public get isConnected(): boolean {
-    return this.data.isConnected;
-  }
+  readonly id: string;
+  readonly name: string;
+  readonly model: string;
+  readonly apiKey: string;
+  readonly isSingleSwitch: boolean;
+  readonly isConnected: boolean;
+  readonly lastStatusChangeTimestamp: Date;
 
   public get status(): SwitchDto[] {
     return this.data.params.switches;
@@ -21,6 +17,15 @@ export class SwitchDeviceModel {
   public switches = new Map<number, SwitchModel>();
 
   constructor(protected data: SwitchDeviceDto) {
+    this.id = this.data.deviceid;
+    this.name = this.data.name;
+    this.model = this.data.model;
+    this.apiKey = this.data.apiKey;
+    this.isSingleSwitch = this.data.isSingleSwitch;
+    this.isConnected = this.data.isConnected;
+    this.lastStatusChangeTimestamp = this.data.lastStatusChangeTimestamp ? new Date(this.data.lastStatusChangeTimestamp) : null;
+
+
     this.status.forEach((s: SwitchNameDto) => {
       this.switches.set(s.outlet, new SwitchModel(s));
     });

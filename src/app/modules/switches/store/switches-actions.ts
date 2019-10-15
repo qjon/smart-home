@@ -1,7 +1,13 @@
-import {SwitchDeviceDto, SwitchDto, SwitchStatus} from '../interfaces/switch-device.interface';
+import {SwitchDeviceChangeSettingsDto, SwitchDeviceDto, SwitchDto, SwitchStatus} from '../interfaces/switch-device.interface';
 import {Action} from '@ngrx/store';
 
 export enum SwitchActionTypes {
+  Create = '[Switches] Create',
+  CreateError = '[Switches] Create error',
+  CreateSuccess = '[Switches] Create success',
+  ChangeSettings = '[Switches] Change Settings',
+  ChangeSettingsError = '[Switches] Change Settings error',
+  ChangeSettingsSuccess = '[Switches] Change Settings success',
   Load = '[Switches] Load',
   ChangeStatus = '[Switches] Change status',
   ChangeStatusError = '[Switches] Change status error',
@@ -9,13 +15,51 @@ export enum SwitchActionTypes {
   ChangeConnectionStatus = '[Switches] Change connection status',
   OnOff = '[Switches] Turn on/off',
   OnOffSuccess = '[Switches] Turn on/off success',
-  Rename = '[Switches] Rename device',
-  RenameError = '[Switches] Rename device error',
-  RenameSuccess = '[Switches] Rename device success',
-  RenameOutlet = '[Switches] Rename device outlet',
-  RenameOutletError = '[Switches] Rename device outlet error',
-  RenameOutletSuccess = '[Switches] Rename device outlet success',
+  OpenCreateDialog = '[Switches] Open create dialog',
   Update = '[Switches] Update device'
+}
+
+export class SwitchesCreateAction implements Action {
+  readonly type = SwitchActionTypes.Create;
+
+  constructor(public payload: { deviceId: string, apiKey: string, name: string }) {
+
+  }
+}
+
+export class SwitchesCreateErrorAction implements Action {
+  readonly type = SwitchActionTypes.CreateError;
+
+  constructor(public payload: { error: any }) {
+  }
+}
+
+export class SwitchesCreateSuccessAction implements Action {
+  readonly type = SwitchActionTypes.CreateSuccess;
+}
+
+export class SwitchesChangeSettingsAction implements Action {
+  readonly type = SwitchActionTypes.ChangeSettings;
+
+  constructor(public payload: { deviceId: string, data: SwitchDeviceChangeSettingsDto }) {
+
+  }
+}
+
+export class SwitchesChangeSettingsSuccessAction implements Action {
+  readonly type = SwitchActionTypes.ChangeSettingsSuccess;
+
+  constructor(public payload: { deviceId: string, data: SwitchDeviceChangeSettingsDto }) {
+
+  }
+}
+
+export class SwitchesChangeSettingsErrorAction implements Action {
+  readonly type = SwitchActionTypes.ChangeSettingsError;
+
+  constructor(public payload: { error: any }) {
+
+  }
 }
 
 export class SwitchesLoadAction implements Action {
@@ -63,58 +107,14 @@ export class SwitchesOnOffAction implements Action {
   }
 }
 
+export class SwitchesOpenCreateDialogAction implements Action {
+  readonly type = SwitchActionTypes.OpenCreateDialog;
+}
+
 export class SwitchesOnOffSuccessAction implements Action {
   readonly type = SwitchActionTypes.OnOffSuccess;
 
   constructor(public payload: { deviceId: string, status: SwitchStatus }) {
-
-  }
-}
-
-export class SwitchesRenameAction implements Action {
-  readonly type = SwitchActionTypes.Rename;
-
-  constructor(public payload: { deviceId: string, name: string }) {
-
-  }
-}
-
-export class SwitchesRenameErrorAction implements Action {
-  readonly type = SwitchActionTypes.RenameError;
-
-  constructor(public payload: { deviceId: string }) {
-
-  }
-}
-
-export class SwitchesRenameSuccessAction implements Action {
-  readonly type = SwitchActionTypes.RenameSuccess;
-
-  constructor(public payload: { deviceId: string }) {
-
-  }
-}
-
-export class SwitchesRenameOutletAction implements Action {
-  readonly type = SwitchActionTypes.RenameOutlet;
-
-  constructor(public payload: { deviceId: string, outlet: number, name: string }) {
-
-  }
-}
-
-export class SwitchesRenameOutletErrorAction implements Action {
-  readonly type = SwitchActionTypes.RenameOutletError;
-
-  constructor(public payload: { deviceId: string, outlet: number }) {
-
-  }
-}
-
-export class SwitchesRenameOutletSuccessAction implements Action {
-  readonly type = SwitchActionTypes.RenameOutletSuccess;
-
-  constructor(public payload: { deviceId: string, outlet: number }) {
 
   }
 }
@@ -128,18 +128,19 @@ export class SwitchesUpdateAction implements Action {
 }
 
 export type SwitchesAction =
-  SwitchesLoadAction
+  SwitchesCreateAction
+  | SwitchesCreateErrorAction
+  | SwitchesCreateSuccessAction
+  | SwitchesChangeSettingsAction
+  | SwitchesChangeSettingsErrorAction
+  | SwitchesChangeSettingsSuccessAction
+  | SwitchesLoadAction
   | SwitchesChangeStatusAction
   | SwitchesChangeStatusErrorAction
   | SwitchesChangeStatusSuccessAction
   | SwitchesChangeConnectionStatusAction
   | SwitchesOnOffAction
   | SwitchesOnOffSuccessAction
-  | SwitchesRenameAction
-  | SwitchesRenameErrorAction
-  | SwitchesRenameSuccessAction
-  | SwitchesRenameOutletAction
-  | SwitchesRenameOutletErrorAction
-  | SwitchesRenameOutletSuccessAction
+  | SwitchesOpenCreateDialogAction
   | SwitchesUpdateAction
   ;

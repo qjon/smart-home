@@ -2,7 +2,7 @@ import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest}
 import {Injectable} from '@angular/core';
 import {Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
-import {NotificationsService} from 'angular2-notifications';
+import {NotificationsService} from '../../notifications/notifications.service';
 
 @Injectable({
   providedIn: 'root'
