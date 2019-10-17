@@ -13,6 +13,11 @@ It use own cloud server instead EWelink [smart-home-server](https://github.com/q
 
 ## Change log
 
+### v1.0.1
+
+* small layout fixes for desktop and mobile view
+* add new device type CW-001
+
 ### v1.0.0
 * changed layout
 * allow to add new device

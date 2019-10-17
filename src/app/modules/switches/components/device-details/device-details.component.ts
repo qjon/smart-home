@@ -24,8 +24,9 @@ export class DeviceDetailsComponent implements OnInit, OnDestroy {
   public isEditMode = false;
 
   public deviceModels: string[] = [
-    'T1EU',
+    'CW-001',
     'S26E',
+    'T1EU',
   ];
   public actionButtonsDisabled = false;
 
